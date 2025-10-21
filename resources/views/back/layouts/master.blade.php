@@ -8,7 +8,8 @@
     <title>{{ config('app.name') }} || @yield('title','Əsas Səhifə')</title>
     <!-- CSS files -->
     <link href="{{  asset('dist') }}/css/tabler.min.css?1692870487" rel="stylesheet"/>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('css')
 </head>
 
@@ -32,6 +33,7 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- Tabler Core -->
 <script src="{{  asset('dist') }}/js/tabler.min.js?1692870487" defer></script>
 
