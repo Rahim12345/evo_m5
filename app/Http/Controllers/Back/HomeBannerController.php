@@ -14,7 +14,11 @@ class HomeBannerController extends Controller
      */
     public function index()
     {
-        dd('banner list');
+        $banners = HomeBanner::orderBy('order_no', 'asc')->where('locale', request('locale'))->get();
+
+        return view('back.pages.home-banner.index', [
+            'banners' => $banners,
+        ]);
     }
 
     /**
@@ -22,7 +26,7 @@ class HomeBannerController extends Controller
      */
     public function create()
     {
-        //
+        return view('back.pages.home-banner.create');
     }
 
     /**
@@ -30,7 +34,25 @@ class HomeBannerController extends Controller
      */
     public function store(StoreHomeBannerRequest $request)
     {
-        //
+        $src = $request->file('src');
+        $imageName = time() . '.' . $src->getClientOriginalExtension();
+        $src->move(public_path('files/home_banners'), $imageName);
+
+        HomeBanner::create([
+            'locale' => $request->locale,
+            'src' => $imageName,
+            'alt' => $request->alt,
+            'main_heading' => $request->main_heading,
+            'title' => $request->title,
+            'intro_text' => $request->intro_text,
+            'button_text_1' => $request->button_text_1,
+            'button_text_2' => $request->button_text_2,
+            'button_link_1' => $request->button_link_1,
+            'button_link_2' => $request->button_link_2,
+            'order_no' => $request->order_no ?? 0,
+        ]);
+
+        return redirect()->route('home-banner.index')->with('success', 'Banner uğurla əlavə edildi.');
     }
 
     /**
