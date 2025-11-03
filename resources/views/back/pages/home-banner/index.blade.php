@@ -5,7 +5,12 @@
 @endsection
 
 @section('css')
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .banner-image {
+            width: 150px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -43,11 +48,20 @@
                     <tr>
                         <td>{{ $banner->id }}</td>
                         <td><img src="{{ asset('files/home_banners/'.$banner->src) }}" alt="{{ $banner->title }}"
-                                 class="img-fluid"></td>
+                                 class="img-fluid banner-image"></td>
                         <td>{{ $banner->title }}</td>
                         <td>
-                            <a href="{{ route('home-banner.edit', $banner->id) }}"><i class="fa fa-edit"></i></a>
-                            <a href="{{ route('home-banner.destroy', $banner->id) }}"><i class="fa fa-trash"></i></a>
+                            <div class="d-flex align-items-center justify-content-center gap-1">
+                                <a href="{{ route('home-banner.edit', $banner->id) }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+
+                                <form action="{{ route('home-banner.destroy',$banner->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger show_confirm" type="submit" onclick="remover($(this), `Silmək istədiyinizdən əminsiniz?`, `Təsdiqlə`, `Ləğv et`);">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
@@ -62,5 +76,24 @@
 @endsection
 
 @section('js')
-
+    <script>
+        function remover(myThis, title, confirmButtonText, cancelButtonText) {
+            let form =  myThis.closest("form");
+            event.preventDefault();
+            Swal.fire({
+                title: title,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: confirmButtonText,
+                cancelButtonText: cancelButtonText
+            })
+                .then((willDelete) => {
+                    if (willDelete.isConfirmed) {
+                        form.submit();
+                    }
+                });
+        }
+    </script>
 @endsection

@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreHomeBannerRequest;
 use App\Http\Requests\UpdateHomeBannerRequest;
 use App\Models\HomeBanner;
+use App\Traits\FileUpload;
 
 class HomeBannerController extends Controller
 {
+    use FileUpload;
+
     /**
      * Display a listing of the resource.
      */
@@ -34,13 +37,11 @@ class HomeBannerController extends Controller
      */
     public function store(StoreHomeBannerRequest $request)
     {
-        $src = $request->file('src');
-        $imageName = time() . '.' . $src->getClientOriginalExtension();
-        $src->move(public_path('files/home_banners'), $imageName);
+        $src = $this->fileSave('files/home_banners/', $request, 'src');
 
         HomeBanner::create([
             'locale' => $request->locale,
-            'src' => $imageName,
+            'src' => $src,
             'alt' => $request->alt,
             'main_heading' => $request->main_heading,
             'title' => $request->title,
@@ -52,7 +53,7 @@ class HomeBannerController extends Controller
             'order_no' => $request->order_no ?? 0,
         ]);
 
-        return redirect()->route('home-banner.index')->with('success', 'Banner uğurla əlavə edildi.');
+        return redirect()->route('home-banner.index', ['locale' => $request->locale])->with('success', 'Banner uğurla əlavə edildi.');
     }
 
     /**
@@ -68,7 +69,9 @@ class HomeBannerController extends Controller
      */
     public function edit(HomeBanner $homeBanner)
     {
-        //
+        return view('back.pages.home-banner.edit', [
+            'homeBanner' => $homeBanner,
+        ]);
     }
 
     /**
@@ -76,14 +79,40 @@ class HomeBannerController extends Controller
      */
     public function update(UpdateHomeBannerRequest $request, HomeBanner $homeBanner)
     {
-        //
+        $src = $this->fileUpdate($homeBanner->src, $request->hasFile('src'), $request->src, 'files/home_banners/');
+
+        $homeBanner->update([
+            'locale' => $request->locale,
+            'src' => $src,
+            'alt' => $request->alt,
+            'main_heading' => $request->main_heading,
+            'title' => $request->title,
+            'intro_text' => $request->intro_text,
+            'button_text_1' => $request->button_text_1,
+            'button_text_2' => $request->button_text_2,
+            'button_link_1' => $request->button_link_1,
+            'button_link_2' => $request->button_link_2,
+            'order_no' => $request->order_no ?? 0,
+        ]);
+
+//        dd($request->post());
+        if ($request->has('save_to_list')) {
+            return redirect()->route('home-banner.index', ['locale' => $request->locale])->with('success', 'Banner uğurla dəyişdirildi.');
+        } else {
+            return redirect()->route('home-banner.edit', ['locale' => $request->locale, 'home_banner' => $homeBanner->id])->with('success', 'Banner uğurla dəyişdirildi.');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(HomeBanner $homeBanner)
+    public function destroy($id)
     {
-        //
+        $homeBanner = HomeBanner::findOrFail($id);
+
+        $this->fileDelete('files/home_banners/' . $homeBanner->src);
+
+        $homeBanner->delete();
+        return redirect()->route('home-banner.index', ['locale' => $homeBanner->locale])->with('success', 'Banner uğurla silindi.');
     }
 }

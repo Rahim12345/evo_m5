@@ -44,13 +44,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="src" class="form-label">Banner Image</label>
-                                    <input type="file" class="form-control
+                                    <label for="src" class="form-label">
+                                        <img id="imagePreview" src="{{ asset('icons/add-image.png') }}" style="width: 150px;cursor:pointer;" title="Şəkil seçin" alt="Preview">
+                                    </label>
+                                    <input type="file" class="form-control d-none
                                     @error('src')
                                        is-invalid
                                     @enderror
                                     " id="src" name="src" accept="image/*">
-                                    <img id="imagePreview" class="d-none" alt="Preview">
+
                                     @error('src')
                                     <small class="text-danger" role="alert">
                                         {{ $message }}
@@ -112,7 +114,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="button_text_1" class="form-label">Button 1 Text</label>
                                     <input type="text" class="form-control
-                                    @error('button_link_1')
+                                    @error('button_text_1')
                                        is-invalid
                                     @enderror" id="button_text_1" name="button_text_1"
                                            value="{{ old('button_text_1') }}"
