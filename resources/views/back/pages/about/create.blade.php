@@ -75,7 +75,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label for="title" class="form-label">Title</label>
+                                    <label for="title" class="form-label">Başlıq</label>
                                     <input type="text" class="form-control
                                     @error('title')
                                        is-invalid

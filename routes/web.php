@@ -10,6 +10,7 @@ use App\Http\Controllers\Front\CourseController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\SubscribeController;
 use Illuminate\Support\Facades\Route;
+use UniSharp\LaravelFilemanager\Lfm;
 
 Route::get('/locale/{locale}', function ($locale) {
     session()->put('locale', $locale);
@@ -31,6 +32,10 @@ Auth::routes([
     'reset' => false,
     'verify' => false,
 ]);
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['auth'], 'as' => 'custom_namespace.'], function () {
+    Lfm::routes();
+});
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {

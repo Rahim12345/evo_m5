@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAboutRequest;
 use App\Http\Requests\UpdateAboutRequest;
 use App\Models\About;
+use App\Traits\FileUpload;
 
 class AboutController extends Controller
 {
+    use FileUpload;
     /**
      * Display a listing of the resource.
      */
@@ -30,7 +32,19 @@ class AboutController extends Controller
      */
     public function store(StoreAboutRequest $request)
     {
-        //
+        $about = About::where('id', 1)->first();
+
+        if($about){
+            $src = $this->fileSave('files/categories/',$request,'inputName');
+        }
+
+        About::updateOrCreate([
+            'id'=>1
+        ],[
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $request->image->store('about', 'public'),
+        ]);
     }
 
     /**
