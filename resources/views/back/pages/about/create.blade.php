@@ -20,7 +20,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('home-banner.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('about.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-12">
@@ -104,6 +104,14 @@
                                         <i class="fa fa-save"></i>
                                     </button>
                                 </div>
+
+                                @if($errors->any())
+                                    <div class="alert alert-danger">
+                                        @foreach($errors->all() as $error)
+                                            <p>{{ $error }}</p>
+                                        @endforeach
+                                    </div>
+                                @endif
                             </div>
                         </form>
                     </div>
