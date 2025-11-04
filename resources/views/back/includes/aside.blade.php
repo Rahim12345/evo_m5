@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Facades\Route; @endphp
 <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu"
@@ -211,7 +212,7 @@
         </div>
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
-                <li class="nav-item">
+                <li class="nav-item {{ Route::currentRouteName() == 'back.dashboard' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('back.dashboard') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -222,7 +223,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->segment(2) == 'home-banner' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('home-banner.index') }}?locale=az">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -233,7 +234,29 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->segment(2) == 'services' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('services.index') }}?locale=az">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                          <i class="fa fa-wrench"></i>
+                        </span>
+                        <span class="nav-link-title">
+                          Xidmətlər
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->segment(2) == 'about' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('about.create') }}?locale=az">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                          <i class="fa fa-info"></i>
+                        </span>
+                        <span class="nav-link-title">
+                          Haqqımızda
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item {{ Route::currentRouteName() == 'back.subscriber.index' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('back.subscriber.index') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->

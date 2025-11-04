@@ -60,6 +60,13 @@ return [
             'report' => false,
         ],
 
+        'lfm_disk' => [
+            'driver' => 'local',
+            'root' => public_path('/files'),
+            'url' => env('APP_URL') . '/files',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

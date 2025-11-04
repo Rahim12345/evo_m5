@@ -25,7 +25,7 @@ class UpdateHomeBannerRequest extends FormRequest
     {
         return [
             'locale' => ['required', Rule::in(array_keys(config('app.languages')))],
-            'src' => ['nullable', 'image', 'max:2048'],
+            'src' => ['nullable', 'image', 'max:5120'],
             'alt' => ['required', 'max:255'],
             'main_heading' => 'required|string|max:255',
             'title' => 'required|string|max:255',

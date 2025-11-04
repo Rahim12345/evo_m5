@@ -9,6 +9,11 @@
         .body {
             background-color: red;
         }
+
+        .owl-item img {
+            height: 500px;
+            object-fit: cover;
+        }
     </style>
 @endsection
 
@@ -29,8 +34,10 @@
                                     <h5 class="text-primary text-uppercase mb-3 animated slideInDown">{{ $banner->main_heading }}</h5>
                                     <h1 class="display-3 text-white animated slideInDown">{{ $banner->title }}</h1>
                                     <p class="fs-5 text-white mb-4 pb-2">{{ $banner->intro_text }}</p>
-                                    <a href="{{ $banner->button_link_1 }}" target="_blank" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">{{ $banner->button_text_1 }}</a>
-                                    <a href="{{ $banner->button_link_2 }}" class="btn btn-light py-md-3 px-md-5 animated slideInRight">{{ $banner->button_text_2 }}</a>
+                                    <a href="{{ $banner->button_link_1 }}" target="_blank"
+                                       class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">{{ $banner->button_text_1 }}</a>
+                                    <a href="{{ $banner->button_link_2 }}"
+                                       class="btn btn-light py-md-3 px-md-5 animated slideInRight">{{ $banner->button_text_2 }}</a>
                                 </div>
                             </div>
                         </div>
@@ -46,42 +53,17 @@
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-4">
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
-                            <h5 class="mb-3">Skilled Instructors</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                @foreach($services as $service)
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="service-item text-center pt-3">
+                            <div class="p-4">
+                                {!! $service->icon !!}
+                                <h5 class="mb-3">{{ $service->title }}</h5>
+                                <p>{{ $service->description }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-globe text-primary mb-4"></i>
-                            <h5 class="mb-3">Online Classes</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-home text-primary mb-4"></i>
-                            <h5 class="mb-3">Home Projects</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
-                            <h5 class="mb-3">Book Library</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
