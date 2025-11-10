@@ -25,7 +25,7 @@ class AboutController extends Controller
      */
     public function create()
     {
-        $about = About::where('id', 1)->first();
+        $about = About::where('locale', request('locale'))->first();
 
         return view('back.pages.about.create',[
             'about' => $about,
@@ -37,7 +37,7 @@ class AboutController extends Controller
      */
     public function store(StoreAboutRequest $request)
     {
-        $about = About::where('id', 1)->first();
+        $about = About::where('id', )->first();
 
         if ($about) {
             $src = $this->fileUpdate($about->src, $request->hasFile('src'), $request->src, 'files/about/');

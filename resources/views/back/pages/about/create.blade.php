@@ -29,7 +29,7 @@
                                         @foreach(config('app.languages') as $locale_code => $locale_name)
                                             <option
                                                 value="{{$locale_code}}"
-                                                @selected(old('locale', 'az') == $locale_code)
+                                                @selected(old('locale', $about ? $about->locale : 'az') == $locale_code)
                                             >
                                                 {{ $locale_name }}
                                             </option>
@@ -45,7 +45,8 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="src" class="form-label">
-                                        <img id="imagePreview" src="{{ asset('icons/add-image.png') }}"
+                                        <img id="imagePreview"
+                                             src="{{ asset($about ? 'files/about/'.$about->src : 'icons/add-image.png') }}"
                                              style="width: 150px;cursor:pointer;" title="Şəkil seçin" alt="Preview">
                                     </label>
                                     <input type="file" class="form-control d-none
@@ -66,7 +67,7 @@
                                     @error('alt')
                                        is-invalid
                                     @enderror
-                                    " id="alt" name="alt" value="{{ old('alt') }}"
+                                    " id="alt" name="alt" value="{{ old('alt',$about ? $about->alt : '') }}"
                                     >
                                     @error('alt')
                                     <small class="text-danger" role="alert">
@@ -79,7 +80,8 @@
                                     <input type="text" class="form-control
                                     @error('title')
                                        is-invalid
-                                    @enderror" id="title" name="title" value="{{ old('title') }}">
+                                    @enderror" id="title" name="title"
+                                           value="{{ old('title',$about ? $about->title : '') }}">
                                     @error('title')
                                     <small class="text-danger" role="alert">
                                         {{ $message }}
@@ -92,7 +94,7 @@
                                     @error('description')
                                        is-invalid
                                     @enderror" id="description" name="description" rows="3"
-                                    >{{ old('description') }}</textarea>
+                                    >{{ old('description',$about ? $about->description : '') }}</textarea>
                                     @error('description')
                                     <small class="text-danger" role="alert">
                                         {{ $message }}
