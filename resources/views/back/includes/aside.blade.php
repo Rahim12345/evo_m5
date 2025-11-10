@@ -256,6 +256,17 @@
                         </span>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->segment(2) == 'category' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('category.index') }}?locale=az">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                          <i class="fa fa-list"></i>
+                        </span>
+                        <span class="nav-link-title">
+                          Kateqoriyalar
+                        </span>
+                    </a>
+                </li>
                 <li class="nav-item {{ Route::currentRouteName() == 'back.subscriber.index' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('back.subscriber.index') }}">
                         <span

@@ -25,11 +25,12 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="locale" class="form-label">Dil seçin</label>
-                                    <select class="form-select mb-3" id="locale" name="locale">
+                                    <select class="form-select mb-3" id="locale" name="locale"
+                                            onchange="window.location.href = '{!! route('about.create',['locale'=>'-locale']) !!}'.replace('-locale',this.value)">
                                         @foreach(config('app.languages') as $locale_code => $locale_name)
                                             <option
                                                 value="{{$locale_code}}"
-                                                @selected(old('locale', $about ? $about->locale : 'az') == $locale_code)
+                                                @selected(old('locale', request('locale')) == $locale_code)
                                             >
                                                 {{ $locale_name }}
                                             </option>
@@ -148,18 +149,5 @@
         });
     </script>
 
-    <script>
-        document.getElementById('src').addEventListener('change', function (event) {
-            const preview = document.getElementById('imagePreview');
-            const file = event.target.files[0];
-
-            if (file) {
-                preview.src = URL.createObjectURL(file);
-                preview.classList.remove('d-none');
-            } else {
-                preview.src = '';
-                preview.classList.add('d-none');
-            }
-        });
-    </script>
+    <script src="{{ asset('back/js/image-preview.js') }}"></script>
 @endsection

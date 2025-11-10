@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\About;
 use App\Models\HomeBanner;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -15,9 +16,12 @@ class HomeController extends Controller
 
         $services = Service::orderBy('order_no', 'asc')->where('locale', app()->getLocale())->get();
 
+        $about = About::where('locale', app()->getLocale())->first();
+
         return view('front.pages.home', [
             'banners' => $banners,
             'services' => $services,
+            'about' => $about,
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\About;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,13 +23,20 @@ class StoreAboutRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'locale' => ['required', 'string', 'size:2'],
-            'src' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:5120'],
-            'alt' => ['required', 'string', 'max:255'],
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-        ];
+        $rules['locale'] = ['required', 'string', 'size:2'];
+        $rules['alt'] = ['required', 'string', 'max:255'];
+        $rules['title'] = ['required', 'string', 'max:255'];
+        $rules['description'] = ['required', 'string'];
+
+        $about = About::where('locale', request('locale'))->first();
+
+        if ($about) {
+            $rules['src'] = ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:5120'];
+        } else {
+            $rules['src'] = ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:5120'];
+        }
+
+        return $rules;
     }
 
     public function attributes(): array

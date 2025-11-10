@@ -27,7 +27,7 @@ class AboutController extends Controller
     {
         $about = About::where('locale', request('locale'))->first();
 
-        return view('back.pages.about.create',[
+        return view('back.pages.about.create', [
             'about' => $about,
         ]);
     }
@@ -37,12 +37,13 @@ class AboutController extends Controller
      */
     public function store(StoreAboutRequest $request)
     {
-        $about = About::where('id', )->first();
+        $about = About::where('locale', $request->locale)->first();
 
         if ($about) {
             $src = $this->fileUpdate($about->src, $request->hasFile('src'), $request->src, 'files/about/');
 
             $about->update([
+                'locale' => $request->locale,
                 'title' => $request->title,
                 'description' => $request->description,
                 'src' => $src,
@@ -52,6 +53,7 @@ class AboutController extends Controller
             $src = $this->fileSave('files/about/', $request, 'src');
 
             $about = About::create([
+                'locale' => $request->locale,
                 'title' => $request->title,
                 'description' => $request->description,
                 'src' => $src,
@@ -59,7 +61,7 @@ class AboutController extends Controller
             ]);
         }
 
-        return redirect()->route('about.create', $about->id)->with('success', 'Haqqımızda məlumatlar yükləndi.');
+        return redirect()->route('about.create', ['locale' => $request->locale])->with('success', 'Haqqımızda məlumatlar yükləndi.');
     }
 
     /**

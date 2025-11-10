@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Back\CategoryController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\HomeBannerController;
 use App\Http\Controllers\Back\ServiceController;
@@ -44,5 +45,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('services', ServiceController::class);
     Route::get('subscriber', [SubscribeController::class, 'index'])->name('back.subscriber.index');
     Route::delete('subscriber/{subscriber}', [SubscribeController::class, 'destroy'])->name('back.subscriber.destroy');
-    Route::resource('about', BackAboutController::class);
+    Route::resource('about', BackAboutController::class)->only(['create','store']);
+    Route::resource('category', CategoryController::class);
 });
