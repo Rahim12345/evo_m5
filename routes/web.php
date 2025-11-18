@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\Back\AboutController as BackAboutController;
 use App\Http\Controllers\Back\CategoryController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\HomeBannerController;
 use App\Http\Controllers\Back\ServiceController;
 use App\Http\Controllers\Front\AboutController as FrontAboutController;
-use App\Http\Controllers\Back\AboutController as BackAboutController;
 use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\CourseController;
 use App\Http\Controllers\Front\HomeController;
@@ -29,7 +29,6 @@ Route::group(['middleware' => ['visitor', 'locale']], function () {
 });
 
 Auth::routes([
-    'register' => false,
     'reset' => false,
     'verify' => false,
 ]);
@@ -41,10 +40,15 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['auth'], 'as' 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('back.dashboard');
-    Route::resource('home-banner', HomeBannerController::class);
-    Route::resource('services', ServiceController::class);
-    Route::get('subscriber', [SubscribeController::class, 'index'])->name('back.subscriber.index');
-    Route::delete('subscriber/{subscriber}', [SubscribeController::class, 'destroy'])->name('back.subscriber.destroy');
-    Route::resource('about', BackAboutController::class)->only(['create','store']);
-    Route::resource('category', CategoryController::class);
+
+    Route::group(['middleware' => 'admin'], function () {
+        Route::resource('home-banner', HomeBannerController::class);
+        Route::resource('services', ServiceController::class);
+        Route::get('subscriber', [SubscribeController::class, 'index'])->name('back.subscriber.index');
+        Route::delete('subscriber/{subscriber}', [SubscribeController::class, 'destroy'])->name('back.subscriber.destroy');
+        Route::resource('about', BackAboutController::class)->only(['create', 'store']);
+        Route::resource('category', CategoryController::class);
+    });
+
+    Route::resource('course', \App\Http\Controllers\Back\CourseController::class);
 });

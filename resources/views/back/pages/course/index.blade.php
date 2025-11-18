@@ -1,26 +1,25 @@
 @extends('back.layouts.master')
 
 @section('title')
-    Kateqoriyalar
+    Kurslar
 @endsection
 
 @section('css')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 @endsection
 
 @section('content')
     <div class="card">
         <div class="card-header">
             <div class="card-tools">
-                <select name="language" id="language" class="form-control d-inline-block w-auto me-2"
-                        onchange="window.location.href='{!! route('category.index') !!}?locale='+this.value">
+                <select name="language" id="language" class="form-control d-inline-block w-auto me-2">
                     @foreach(config('app.languages') as $locale=>$lang)
                         <option value="{{ $locale }}" {{ request('locale') === $locale ? 'selected' : '' }}>
                             {{ $lang }}
                         </option>
                     @endforeach
                 </select>
-                <a href="{{ route('category.create') }}?locale={{ request('locale') }}" class="btn btn-primary">
+                <a href="{{ route('course.create') }}?locale={{ request('locale') }}" class="btn btn-primary">
                     <i class="fa fa-plus"></i>
                 </a>
             </div>
@@ -32,31 +31,31 @@
                     <tr>
                         <th>#</th>
                         <th>Şəkil</th>
-                        <th>Ad</th>
-                        <th>Sıra no</th>
+                        <th>Kateqoriya</th>
+                        <th>Kurs ad</th>
+                        <th>Müəllif</th>
                         <th>Tarix</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($categories as $category)
-                        <tr class="categories" data-id="{{ $category->id }}">
+                    @forelse($courses as $course)
+                        <tr class="courses" data-id="{{ $course->id }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                <div class="image" style="width: 100px;height: 100px">
-                                    <img src="{{ asset('files/categories/'.$category->src) }}"
-                                         style="object-fit: cover;height: -webkit-fill-available;"
-                                         alt="{{ $category->alt }}">
-                                </div>
+                                <img src="{{ asset('files/courses/'.$course->src) }}" alt="{{ $course->alt }}"
+                                     width="50">
                             </td>
-                            <td>{{ $category->name }}</td>
-                            <td>{{ $category->order_no }}</td>
-                            <td>{{ $category->created_at->format('d-m-Y') }}</td>
+                            <td>{{ $course->getCategory->name }}</td>
+                            <td>{{ $course->name }}</td>
+                            <td>{{ $course->getTeacher->name }}</td>
+                            <td>{{ $course->created_at->format('d-m-Y') }}</td>
                             <td>
-                                <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-info">
+                                <a href="{{ route('course.edit', $course->id) }}?locale={{ request('locale') }}"
+                                   class="btn btn-sm btn-info">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <form action="{{ route('category.destroy', $category->id) }}" method="POST"
+                                <form action="{{ route('course.destroy', $course->id) }}" method="POST"
                                       class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -82,7 +81,7 @@
 @section('js')
     <script>
         $('#language').on('change', function () {
-            window.location.href = '{{ route("category.index") }}?locale=' + $(this).val();
+            window.location.href = '{{ route("course.index") }}?locale=' + $(this).val();
         });
 
         function remover(myThis, title, confirmButtonText, cancelButtonText) {
@@ -110,9 +109,9 @@
                             success: function (response) {
                                 console.log(response);
 
-                                $('.categories[data-id="' + response.id + '"]').remove();
+                                $('.courses[data-id="' + response.id + '"]').remove();
 
-                                toastr.success('Kateqoriya uğurla silindi', 'Əla');
+                                toastr.success('Kurs uğurla silindi', 'Əla');
                             },
                             error: function (myErrors) {
                                 $.each(myErrors.responseJSON.errors, function (key, value) {

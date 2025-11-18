@@ -223,61 +223,115 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->segment(2) == 'home-banner' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('home-banner.index') }}?locale=az">
+                @if(auth()->check() && auth()->user()->role_id == 1)
+                    <li class="nav-item {{ request()->segment(2) == 'home-banner' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('home-banner.index') }}?locale=az">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                           <i class="fa fa-home"></i>
                         </span>
-                        <span class="nav-link-title">
+                            <span class="nav-link-title">
                           Home banner
                         </span>
-                    </a>
-                </li>
-                <li class="nav-item {{ request()->segment(2) == 'services' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('services.index') }}?locale=az">
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->segment(2) == 'services' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('services.index') }}?locale=az">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                           <i class="fa fa-wrench"></i>
                         </span>
-                        <span class="nav-link-title">
+                            <span class="nav-link-title">
                           Xidmətlər
                         </span>
-                    </a>
-                </li>
-                <li class="nav-item {{ request()->segment(2) == 'about' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('about.create') }}?locale=az">
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->segment(2) == 'about' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('about.create') }}?locale=az">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                           <i class="fa fa-info"></i>
                         </span>
-                        <span class="nav-link-title">
+                            <span class="nav-link-title">
                           Haqqımızda
                         </span>
-                    </a>
-                </li>
-                <li class="nav-item {{ request()->segment(2) == 'category' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('category.index') }}?locale=az">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                          <i class="fa fa-list"></i>
-                        </span>
-                        <span class="nav-link-title">
-                          Kateqoriyalar
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item {{ Route::currentRouteName() == 'back.subscriber.index' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('back.subscriber.index') }}">
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Route::currentRouteName() == 'back.subscriber.index' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('back.subscriber.index') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                           <i class="fa fa-envelope"></i>
                         </span>
-                        <span class="nav-link-title">
+                            <span class="nav-link-title">
                           Abunələr
                         </span>
-                    </a>
-                </li>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item active dropdown">
+                        <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
+                           data-bs-auto-close="false" role="button" aria-expanded="true">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/layout-2 -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                   viewBox="0 0 24 24"
+                                   stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                   stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path
+                                    d="M4 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
+                                <path
+                                    d="M4 13m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
+                                <path
+                                    d="M14 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
+                                <path
+                                    d="M14 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
+                              </svg>
+                            </span>
+                            <span class="nav-link-title">
+                              Təlimlər
+                            </span>
+                        </a>
+                        <div class="dropdown-menu show">
+                            <div class="dropdown-menu-columns">
+                                <div class="dropdown-menu-column">
+                                    <a class="dropdown-item {{ request()->segment(2) == 'category' ? 'active' : '' }}" href="{{ route('category.index') }}?locale=az">
+                                        <span
+                                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                          <i class="fa fa-list"></i>
+                                        </span>
+                                        <span class="nav-link-title">
+                                          Kateqoriyalar
+                                        </span>
+                                    </a>
+                                    <a class="dropdown-item {{ request()->segment(2) == 'course' ? 'active' : '' }}"
+                                       href="{{ route('course.index') }}?locale=az">
+                                        <span
+                                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                          <i class="fa fa-graduation-cap"></i>
+                                        </span>
+                                        <span class="nav-link-title">
+                                          Kurslar
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @else
+                    <li class="nav-item {{ request()->segment(2) == 'course' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('course.index') }}?locale=az">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                          <i class="fa fa-graduation-cap"></i>
+                        </span>
+                            <span class="nav-link-title">
+                          Kurslar
+                        </span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

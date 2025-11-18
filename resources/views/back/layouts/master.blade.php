@@ -5,6 +5,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <meta http-equiv="refresh" content="3600"/>
+
     <title>{{ config('app.name') }} || @yield('title','Əsas Səhifə')</title>
     <!-- CSS files -->
     <link href="{{  asset('dist') }}/css/tabler.min.css?1692870487" rel="stylesheet"/>

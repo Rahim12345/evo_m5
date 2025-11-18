@@ -1,7 +1,7 @@
 @extends('back.layouts.master')
 
 @section('title')
-    Kateqoriyanı redaktə edin
+    Kurs redaktə et
 @endsection
 
 @section('css')
@@ -11,7 +11,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form id="categoryForm" action="{{ route('category.update',$category->id) }}" method="POST"
+            <form id="courseForm" action="{{ route('course.update',$course->id) }}" method="POST"
                   enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -31,11 +31,10 @@
                     </select>
                     <div id="locale-error" class="text-danger"></div>
                 </div>
-
                 <div class="form-group mb-3">
                     <label for="src">
-                        <img id="imagePreview" src="{{ asset('files/categories/'.$category->src) }}"
-                             alt="{{ $category->alt }}"
+                        <img id="imagePreview" src="{{ asset('files/courses/'.$course->src) }}"
+                             alt="{{ $course->alt }}"
                              style="width: 100px;cursor:pointer;">
                     </label>
                     <input type="file" name="src" id="src"
@@ -45,31 +44,43 @@
 
                 <div class="form-group mb-3">
                     <label for="alt">Alt Text</label>
-                    <input type="text" name="alt" id="alt" class="form-control" value="{{ $category->alt }}">
+                    <input type="text" name="alt" id="alt" class="form-control" value="{{ $course->alt }}">
                     <div id="alt-error" class="text-danger"></div>
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="name">Ad</label>
-                    <input type="text" name="name" id="name" class="form-control" value="{{ $category->name }}"
+                    <input type="text" name="name" id="name" class="form-control" value="{{ $course->name }}"
                            onkeyup="document.getElementById('slug').value = this.value.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')">
                     <div id="name-error" class="text-danger"></div>
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="slug">Slug</label>
-                    <input type="text" name="slug" id="slug" class="form-control" value="{{ $category->slug }}">
+                    <input type="text" name="slug" id="slug" class="form-control" value="{{ $course->slug }}">
                     <div id="slug-error" class="text-danger"></div>
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="order_no">Sıra nömrəsi</label>
-                    <input type="number" name="order_no" id="order_no"
-                           class="form-control" value="{{ $category->order_no }}">
+                    <input type="number" name="order_no" id="order_no" value="{{ $course->order_no }}"
+                           class="form-control" value="0">
                     <div id="order_no-error" class="text-danger"></div>
                 </div>
 
-                <button type="submit" id="saveCategory" class="btn btn-primary">Yadda saxla</button>
+                <div class="form-group mb-3">
+                    <label for="category_id">Kateqoriyalar</label>
+                    <select name="category_id" id="category_id" class="form-control">
+                        <option value="">Birini seçin</option>
+                        @foreach($categories as $category)
+                            <option
+                                value="{{ $category->id }}" @selected(old('category_id', $course->category_id) == $category->id)>{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    <div id="category_id-error" class="text-danger"></div>
+                </div>
+
+                <button type="submit" id="saveCourse" class="btn btn-primary">Yadda saxla</button>
             </form>
         </div>
     </div>
@@ -78,15 +89,15 @@
 @section('js')
     <script src="{{ asset('back/js/image-preview.js') }}"></script>
     <script>
-        $('#saveCategory').click(function (e) {
+        $('#saveCourse').click(function (e) {
             $('.text-danger').html('');
             e.preventDefault();
             $(this).prop('disabled', true);
-            var categoryForm = document.getElementById("categoryForm");
-            var data = new FormData(categoryForm);
+            var courseForm = document.getElementById("courseForm");
+            var data = new FormData(courseForm);
 
             $.ajax({
-                url: '{!! route('category.update',$category->id) !!}',
+                url: '{!! route('course.update',$course->id) !!}',
                 data: data,
                 cache: false,
                 processData: false,
@@ -102,7 +113,7 @@
                     $.each(myErrors.responseJSON.errors, function (key, value) {
                         $('#' + key + '-error').html('').html(value);
                     });
-                    $('#saveCategory').prop('disabled', false);
+                    $('#saveCourse').prop('disabled', false);
                 }
             });
         });

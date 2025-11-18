@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class UpdateCourseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,8 @@ class UpdateCategoryRequest extends FormRequest
             'alt' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255'],
-            'order_no' => ['required', 'integer', 'min:0']
+            'order_no' => ['required', 'integer', 'min:0'],
+            'category_id' => ['required', 'exists:categories,id'],
         ];
     }
 
@@ -40,7 +41,8 @@ class UpdateCategoryRequest extends FormRequest
             'alt' => 'Alternative mətn',
             'name' => 'Ad',
             'slug' => 'Slug',
-            'order_no' => 'Sıra nömrəsi'
+            'order_no' => 'Sıra nömrəsi',
+            'category_id' => 'Kateqoriya',
         ];
     }
 }

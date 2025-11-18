@@ -14,6 +14,7 @@
         body {
             background: linear-gradient(135deg, #4e73df 0%, #1cc88a 100%);
             font-family: 'Nunito', sans-serif;
+            height: 95vh;
         }
 
         .card {
@@ -139,6 +140,12 @@
                             <button type="submit" class="btn btn-primary w-100">
                                 <i class="fa-solid fa-right-to-bracket me-2"></i> {{ __('Daxil ol') }}
                             </button>
+
+                            <div class="mt-3 text-center">
+                                <a href="{{ route('register') }}" class="text-primary text-decoration-none">
+                                    {{ __('Hesabınız yoxdur? Qeydiyyatdan keç') }}
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </div>

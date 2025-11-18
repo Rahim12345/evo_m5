@@ -15,6 +15,20 @@
                 @csrf
                 <input type="hidden" name="locale" value="{{ request('locale', 'az') }}">
 
+                <div class="col-md-12">
+                    <label for="locale" class="form-label">Dil seçin</label>
+                    <select class="form-select mb-3" id="locale" name="locale">
+                        @foreach(config('app.languages') as $locale_code => $locale_name)
+                            <option
+                                value="{{$locale_code}}"
+                                @selected(old('locale', request('locale')) == $locale_code)
+                            >
+                                {{ $locale_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div id="locale-error" class="text-danger"></div>
+                </div>
                 <div class="form-group mb-3">
                     <label for="src">
                         <img id="imagePreview" src="{{ asset('icons/add-image.png') }}" alt="add-image.png"
@@ -51,7 +65,7 @@
                     <div id="order_no-error" class="text-danger"></div>
                 </div>
 
-                <button type="submit" id="addCategory" class="btn btn-primary">Yadda saxla</button>
+                <button type="submit" id="saveCategory" class="btn btn-primary">Yadda saxla</button>
             </form>
         </div>
     </div>
@@ -60,7 +74,7 @@
 @section('js')
     <script src="{{ asset('back/js/image-preview.js') }}"></script>
     <script>
-        $('#addCategory').click(function (e) {
+        $('#saveCategory').click(function (e) {
             $('.text-danger').html('');
             e.preventDefault();
             $(this).prop('disabled', true);
@@ -84,9 +98,18 @@
                     $.each(myErrors.responseJSON.errors, function (key, value) {
                         $('#' + key + '-error').html('').html(value);
                     });
-                    $('#addCategory').prop('disabled', false);
+                    $('#saveCategory').prop('disabled', false);
                 }
             });
+        });
+    </script>
+
+    <script>
+        $('#locale').on('change', function() {
+            var locale = $(this).val();
+            var newUrl = "{!! route('category.create', ['locale' => '-locale']) !!}".replace('-locale', locale);
+
+            window.history.pushState({}, '', newUrl);
         });
     </script>
 

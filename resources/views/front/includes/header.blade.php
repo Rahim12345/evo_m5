@@ -34,8 +34,32 @@
                 @endif
             </select>
         </div>
-        <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">@lang('menu.join_now')<i
-                class="fa fa-arrow-right ms-3"></i></a>
+        @if(!auth()->check())
+            <a href="{{ route('login') }}"
+               class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">@lang('menu.login')<i
+                    class="fa fa-arrow-right ms-3"></i></a>
+        @else
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white"
+                         style="width: 35px; height: 35px;">
+                        {{ mb_strtoupper(mb_substr(auth()->user()->name, 0, 2)) }}
+                    </div>
+                    <span class="ms-2">{{ auth()->user()->name }}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="dropdown-item">
+                                <i class="fa fa-sign-out-alt me-2"></i>@lang('menu.logout')
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        @endif
     </div>
 </nav>
 <!-- Navbar End -->

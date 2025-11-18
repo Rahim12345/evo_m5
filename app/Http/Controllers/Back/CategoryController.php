@@ -67,7 +67,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('back.pages.category.edit', [
+            'category' => $category
+        ]);
     }
 
     /**
@@ -75,7 +77,21 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $src = $this->fileUpdate($category->src, $request->hasFile('src'), $request->src, 'files/categories/');
+
+        $category->update([
+            'locale' => $request->locale,
+            'src' => $src,
+            'alt' => $request->alt,
+            'name' => $request->name,
+            'slug' => str_slug($request->slug),
+            'order_no' => $request->order_no,
+        ]);
+
+        return response()->json([
+            'message' => 'Kateqoriya uğurla əlavə edildi.',
+            'redirect_url' => route('category.index') . '?locale=' . $request->locale
+        ], 200);
     }
 
     /**
@@ -83,6 +99,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $this->fileDelete('files/categories/' . $category->src);
+        $category->delete();
+
+        return response()->json($category);
     }
 }

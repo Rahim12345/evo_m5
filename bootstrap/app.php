@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Admin;
 use App\Http\Middleware\setLocale;
 use App\Http\Middleware\Visitor;
 use Illuminate\Foundation\Application;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'visitor' => Visitor::class,
             'locale' => setLocale::class,
+            'admin' => Admin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
