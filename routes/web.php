@@ -4,6 +4,7 @@ use App\Http\Controllers\Back\AboutController as BackAboutController;
 use App\Http\Controllers\Back\CategoryController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\HomeBannerController;
+use App\Http\Controllers\Back\InstructorController;
 use App\Http\Controllers\Back\ServiceController;
 use App\Http\Controllers\Front\AboutController as FrontAboutController;
 use App\Http\Controllers\Front\ContactController;
@@ -48,6 +49,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::delete('subscriber/{subscriber}', [SubscribeController::class, 'destroy'])->name('back.subscriber.destroy');
         Route::resource('about', BackAboutController::class)->only(['create', 'store']);
         Route::resource('category', CategoryController::class);
+        Route::resource('instructor', InstructorController::class);
     });
 
     Route::resource('course', \App\Http\Controllers\Back\CourseController::class);

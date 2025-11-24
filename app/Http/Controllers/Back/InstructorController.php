@@ -6,15 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInstructorRequest;
 use App\Http\Requests\UpdateInstructorRequest;
 use App\Models\Instructor;
+use App\Traits\FileUpload;
 
 class InstructorController extends Controller
 {
+    use FileUpload;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $instructors = Instructor::where('locale', request('locale'))->get();
+
+        return view('back.pages.instructor.index', [
+            'instructors' => $instructors
+        ]);
     }
 
     /**
@@ -22,7 +29,7 @@ class InstructorController extends Controller
      */
     public function create()
     {
-        //
+        return view('back.pages.instructor.create');
     }
 
     /**
@@ -30,7 +37,24 @@ class InstructorController extends Controller
      */
     public function store(StoreInstructorRequest $request)
     {
-        //
+        $src = $this->fileSave('files/instructors/', $request, 'src');
+
+        Instructor::create([
+            'locale' => $request->locale,
+            'src' => $src,
+            'alt' => $request->alt,
+            'name' => $request->name,
+            'facebook' => $request->facebook,
+            'instagram' => $request->instagram,
+            'x' => $request->x,
+            'profession' => $request->profession,
+            'order_no' => $request->order_no,
+        ]);
+
+        return response()->json([
+            'message' => 'Təlimçi uğurla əlavə edildi.',
+            'redirect_url' => route('instructor.index') . '?locale=' . $request->locale
+        ], 200);
     }
 
     /**
@@ -46,7 +70,9 @@ class InstructorController extends Controller
      */
     public function edit(Instructor $instructor)
     {
-        //
+        return view('back.pages.instructor.edit', [
+            'instructor' => $instructor
+        ]);
     }
 
     /**
@@ -54,7 +80,24 @@ class InstructorController extends Controller
      */
     public function update(UpdateInstructorRequest $request, Instructor $instructor)
     {
-        //
+        $src = $this->fileUpdate($instructor->src, $request->hasFile('src'), $request->src, 'files/instructors/');
+
+        $instructor->update([
+            'locale' => $request->locale,
+            'src' => $src,
+            'alt' => $request->alt,
+            'name' => $request->name,
+            'facebook' => $request->facebook,
+            'instagram' => $request->instagram,
+            'x' => $request->x,
+            'profession' => $request->profession,
+            'order_no' => $request->order_no,
+        ]);
+
+        return response()->json([
+            'message' => 'Təlimçi uğurla əlavə edildi.',
+            'redirect_url' => route('instructor.index') . '?locale=' . $request->locale
+        ], 200);
     }
 
     /**
@@ -62,6 +105,9 @@ class InstructorController extends Controller
      */
     public function destroy(Instructor $instructor)
     {
-        //
+        $this->fileDelete('files/instructors/' . $instructor->src);
+        $instructor->delete();
+
+        return response()->json($instructor);
     }
 }

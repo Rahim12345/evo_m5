@@ -224,28 +224,54 @@
                     </a>
                 </li>
                 @if(auth()->check() && auth()->user()->role_id == 1)
-                    <li class="nav-item {{ request()->segment(2) == 'home-banner' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('home-banner.index') }}?locale=az">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                          <i class="fa fa-home"></i>
-                        </span>
+                    <li class="nav-item active dropdown">
+                        <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
+                           data-bs-auto-close="false" role="button" aria-expanded="true">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/layout-2 -->
+                              <i class="fa fa-home"></i>
+                            </span>
                             <span class="nav-link-title">
-                          Home banner
-                        </span>
+                              Əsas səhifə
+                            </span>
                         </a>
+                        <div class="dropdown-menu show">
+                            <div class="dropdown-menu-columns">
+                                <div class="dropdown-menu-column">
+                                    <a class="dropdown-item {{ request()->segment(2) == 'home-banner' ? 'active' : '' }}"
+                                       href="{{ route('home-banner.index') }}?locale=az">
+                                        <span
+                                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                          <i class="fa fa-photo"></i>
+                                        </span>
+                                        <span class="nav-link-title">
+                                          Home banner
+                                        </span>
+                                    </a>
+                                    <a class="dropdown-item {{ request()->segment(2) == 'services' ? 'active' : '' }}"
+                                       href="{{ route('services.index') }}?locale=az">
+                                        <span
+                                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                          <i class="fa fa-graduation-cap"></i>
+                                        </span>
+                                        <span class="nav-link-title">
+                                          Xidmətlər
+                                        </span>
+                                    </a>
+                                    <a class="dropdown-item {{ request()->segment(2) == 'instructor' ? 'active' : '' }}"
+                                       href="{{ route('instructor.index') }}?locale=az">
+                                        <span
+                                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                          <i class="fa fa-users"></i>
+                                        </span>
+                                        <span class="nav-link-title">
+                                          Təlimçilər
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </li>
-                    <li class="nav-item {{ request()->segment(2) == 'services' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('services.index') }}?locale=az">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                          <i class="fa fa-wrench"></i>
-                        </span>
-                            <span class="nav-link-title">
-                          Xidmətlər
-                        </span>
-                        </a>
-                    </li>
+
                     <li class="nav-item {{ request()->segment(2) == 'about' ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('about.create') }}?locale=az">
                         <span
@@ -296,7 +322,8 @@
                         <div class="dropdown-menu show">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
-                                    <a class="dropdown-item {{ request()->segment(2) == 'category' ? 'active' : '' }}" href="{{ route('category.index') }}?locale=az">
+                                    <a class="dropdown-item {{ request()->segment(2) == 'category' ? 'active' : '' }}"
+                                       href="{{ route('category.index') }}?locale=az">
                                         <span
                                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                                           <i class="fa fa-list"></i>

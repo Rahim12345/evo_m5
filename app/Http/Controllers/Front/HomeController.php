@@ -7,6 +7,7 @@ use App\Models\About;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\HomeBanner;
+use App\Models\Instructor;
 use App\Models\Service;
 
 class HomeController extends Controller
@@ -26,12 +27,18 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
+        $instructors = Instructor::where('locale', app()->getLocale())
+            ->orderBy('order_no', 'asc')
+            ->take(4)
+            ->get();
+
         return view('front.pages.home', [
             'banners' => $banners,
             'services' => $services,
             'about' => $about,
             'categories' => $categories,
             'courses' => $courses,
+            'instructors' => $instructors
         ]);
     }
 }
