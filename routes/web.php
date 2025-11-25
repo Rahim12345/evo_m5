@@ -6,10 +6,12 @@ use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\HomeBannerController;
 use App\Http\Controllers\Back\InstructorController;
 use App\Http\Controllers\Back\ServiceController;
+use App\Http\Controllers\Back\TestimonialController;
 use App\Http\Controllers\Front\AboutController as FrontAboutController;
 use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\CourseController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\SingleController;
 use App\Http\Controllers\SubscribeController;
 use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Lfm;
@@ -50,6 +52,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::resource('about', BackAboutController::class)->only(['create', 'store']);
         Route::resource('category', CategoryController::class);
         Route::resource('instructor', InstructorController::class);
+        Route::resource('testimonial', TestimonialController::class);
+        Route::resource('single', SingleController::class);
     });
 
     Route::resource('course', \App\Http\Controllers\Back\CourseController::class);

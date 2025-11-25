@@ -1,4 +1,5 @@
-<!-- Navbar Start -->
+@php use Illuminate\Support\Facades\Route; @endphp
+    <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
     <a href="{{ route('front.home') }}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i> {{ config('app.name') }} </h2>
@@ -8,10 +9,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="{{ route('front.home') }}" class="nav-item nav-link active">@lang('menu.home')</a>
-            <a href="{{ route('front.about') }}" class="nav-item nav-link">@lang('menu.about')</a>
-            <a href="{{ route('front.courses') }}" class="nav-item nav-link">@lang('menu.courses')</a>
-            <a href="{{ route('front.contact') }}" class="nav-item nav-link">@lang('menu.contact')</a>
+            <a href="{{ route('front.home') }}"
+               class="nav-item nav-link {{ Route::currentRouteName() == 'front.home' ? 'active' : '' }}">@lang('menu.home')</a>
+            <a href="{{ route('front.about') }}"
+               class="nav-item nav-link {{ Route::currentRouteName() == 'front.about' ? 'active' : '' }}">@lang('menu.about')</a>
+            <a href="{{ route('front.courses') }}"
+               class="nav-item nav-link {{ Route::currentRouteName() == 'front.courses' ? 'active' : '' }}">@lang('menu.courses')</a>
+            <a href="{{ route('front.contact') }}"
+               class="nav-item nav-link {{ Route::currentRouteName() == 'front.contact' ? 'active' : '' }}">@lang('menu.contact')</a>
             <select name="locale" id="locale"
                     onchange="window.location.href='{{ route('locale',['locale'=>':locale']) }}'.replace(':locale',this.value)">
                 <option value="{{ app()->getLocale() }}">{{ strtoupper(app()->getLocale()) }}</option>
