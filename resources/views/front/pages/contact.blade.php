@@ -1,7 +1,8 @@
+@php use App\Helpers\Single; @endphp
 @extends('front.layouts.master')
 
 @section('title')
-Əlaqə
+    Əlaqə
 @endsection
 
 @section('css')
@@ -17,9 +18,8 @@
                     <h1 class="display-3 text-white animated slideInDown">Contact</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Contact</li>
+                            <li class="breadcrumb-item"><a class="text-white" href="#">@lang('menu.home')</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">@lang('menu.contact')</li>
                         </ol>
                     </nav>
                 </div>
@@ -39,32 +39,37 @@
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <h5>Get In Touch</h5>
-                    <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
+                    <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form
+                        with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're
+                        done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
                     <div class="d-flex align-items-center mb-3">
-                        <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style="width: 50px; height: 50px;">
+                        <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary"
+                             style="width: 50px; height: 50px;">
                             <i class="fa fa-map-marker-alt text-white"></i>
                         </div>
                         <div class="ms-3">
                             <h5 class="text-primary">Office</h5>
-                            <p class="mb-0">123 Street, New York, USA</p>
+                            <p class="mb-0">{{ Single::get('address_'.app()->getLocale()) }}</p>
                         </div>
                     </div>
                     <div class="d-flex align-items-center mb-3">
-                        <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style="width: 50px; height: 50px;">
+                        <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary"
+                             style="width: 50px; height: 50px;">
                             <i class="fa fa-phone-alt text-white"></i>
                         </div>
                         <div class="ms-3">
                             <h5 class="text-primary">Mobile</h5>
-                            <p class="mb-0">+012 345 67890</p>
+                            <p class="mb-0">{{ Single::get('phone_'.app()->getLocale()) }}</p>
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
-                        <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style="width: 50px; height: 50px;">
+                        <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary"
+                             style="width: 50px; height: 50px;">
                             <i class="fa fa-envelope-open text-white"></i>
                         </div>
                         <div class="ms-3">
                             <h5 class="text-primary">Email</h5>
-                            <p class="mb-0">info@example.com</p>
+                            <p class="mb-0">{{ Single::get('email_'.app()->getLocale()) }}</p>
                         </div>
                     </div>
                 </div>
@@ -75,34 +80,43 @@
                             tabindex="0"></iframe>
                 </div>
                 <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    <form>
+                    <form method="post" action="{{ route('front.contact.post') }}" id="contactForm"
+                          onsubmit="return false">
+                        @csrf
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                    <label for="name">Your Name</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                           placeholder="Tam ad">
+                                    <label for="name">Tam ad</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                    <label for="email">Your Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                           placeholder="Your Email">
+                                    <label for="email">Email</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    <label for="subject">Subject</label>
+                                    <input type="text" class="form-control" id="subject" name="subject"
+                                           placeholder="Mövzu">
+                                    <label for="subject">Mövzu</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px"></textarea>
-                                    <label for="message">Message</label>
+                                    <textarea class="form-control" placeholder="Mesaj" id="message"
+                                              name="message"
+                                              style="height: 150px"></textarea>
+                                    <label for="message">Mesaj</label>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                                <button class="btn btn-primary w-100 py-3" type="button" id="sendMessage">
+                                    Mesaj göndər
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -114,5 +128,33 @@
 @endsection
 
 @section('js')
+    <script>
+        $('#sendMessage').click(function () {
+            let myThis = $(this);
 
+            myThis.prop('disabled', true);
+            var contactForm = document.getElementById("contactForm");
+            var data = new FormData(contactForm);
+
+            $.ajax({
+                url: '{!! route('front.contact.post') !!}',
+                data: data,
+                cache: false,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function () {
+                    toastr.success('Mesaj uğurla göndərildi');
+
+                    myThis.prop('disabled', false);
+                },
+                error: function (myErrors) {
+                    $.each(myErrors.responseJSON.errors, function (key, value) {
+                        toastr.error(value, 'Xəta');
+                    });
+                    myThis.prop('disabled', false);
+                }
+            });
+        });
+    </script>
 @endsection

@@ -90,6 +90,9 @@ return [
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+    'WP_INSTANCE' => env('WP_INSTANCE', ''),
+    'WP_TOKEN' => env('WP_TOKEN', ''),
+
 
     /*
     |--------------------------------------------------------------------------

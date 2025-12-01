@@ -16,6 +16,15 @@ use App\Http\Controllers\SubscribeController;
 use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Lfm;
 
+
+Route::get('qr-test', function () {
+    $qr = \SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(300)->generate('https://evo_m5.test/qr-test');
+
+
+    $filename = 'qr_' . 2 . '.png';
+    Storage::disk('public')->put('qr/' . $filename, $qr);
+});
+
 Route::get('/locale/{locale}', function ($locale) {
     session()->put('locale', $locale);
 
@@ -26,6 +35,7 @@ Route::group(['middleware' => ['visitor', 'locale']], function () {
     Route::get('/', [HomeController::class, 'home'])->name('front.home');
     Route::get('/haqqimizda', [FrontAboutController::class, 'about'])->name('front.about');
     Route::get('/elaqe', [ContactController::class, 'contact'])->name('front.contact');
+    Route::post('/elaqe', [ContactController::class, 'contactPost'])->name('front.contact.post');
     Route::get('/kurslar', [CourseController::class, 'courses'])->name('front.courses');
 
     Route::post('subscribe', [SubscribeController::class, 'store'])->name('front.subscribe.store');
@@ -54,6 +64,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::resource('instructor', InstructorController::class);
         Route::resource('testimonial', TestimonialController::class);
         Route::resource('single', SingleController::class);
+        Route::get('/contact', [ContactController::class, 'index'])->name('back.contact');
     });
 
     Route::resource('course', \App\Http\Controllers\Back\CourseController::class);

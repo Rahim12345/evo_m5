@@ -304,6 +304,17 @@
                         </span>
                         </a>
                     </li>
+                    <li class="nav-item {{ Route::currentRouteName() == 'back.contact' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('back.contact') }}">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                          <i class="fa fa-envelope"></i>
+                        </span>
+                            <span class="nav-link-title">
+                          Mesajlar
+                        </span>
+                        </a>
+                    </li>
                     <li class="nav-item {{ request()->segment(2) == 'single' ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('single.create') }}?locale=az">
                         <span
